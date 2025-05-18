@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://u3r5ug0iar76"]
+
+[ext_resource type="Script" uid="uid://b881l124qmvy8" path="res://game/game.gd" id="1_h7iqs"]
+[ext_resource type="PackedScene" uid="uid://dypg6ubg7j1ed" path="res://world/world.tscn" id="1_l1rk1"]
+[ext_resource type="PackedScene" uid="uid://bouqvrkh3f17b" path="res://game/ui/connection_manager.tscn" id="2_vasa2"]
+
+[node name="Game" type="Node"]
+script = ExtResource("1_h7iqs")
+
+[node name="World" parent="." instance=ExtResource("1_l1rk1")]
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="ConnectionManager" parent="UI" instance=ExtResource("2_vasa2")]
+
+[connection signal="hosting" from="UI/ConnectionManager" to="." method="_on_connection_manager_hosting"]
