@@ -1,0 +1,78 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0lfgtuxt16se"]
+
+[ext_resource type="Script" uid="uid://d4iq0xavtqls7" path="res://game/ui/lobby.gd" id="1_onvgb"]
+[ext_resource type="PackedScene" uid="uid://i7ntx7aqyo7b" path="res://game/ui/player_card.tscn" id="2_fs0fx"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_kk2hb"]
+font_size = 32
+
+[node name="Lobby" type="Control" node_paths=PackedStringArray("host_controls", "player_cards")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_onvgb")
+host_controls = [NodePath("Centered/Controls/Start")]
+player_card = ExtResource("2_fs0fx")
+player_cards = NodePath("Centered/PlayerCards")
+
+[node name="TitleMargin" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -55.0
+offset_right = 55.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/margin_top = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TitleMargin"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="TitleMargin/VBoxContainer"]
+layout_mode = 2
+text = "Waiting Lobby"
+label_settings = SubResource("LabelSettings_kk2hb")
+
+[node name="Centered" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -96.0
+offset_top = -20.0
+offset_right = 96.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 70
+
+[node name="PlayerCards" type="HBoxContainer" parent="Centered"]
+layout_mode = 2
+theme_override_constants/separation = 50
+alignment = 1
+
+[node name="PlayerCardSpawner" type="MultiplayerSpawner" parent="Centered/PlayerCards"]
+_spawnable_scenes = PackedStringArray("uid://i7ntx7aqyo7b")
+spawn_path = NodePath("..")
+
+[node name="Controls" type="HBoxContainer" parent="Centered"]
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="Start" type="Button" parent="Centered/Controls"]
+layout_mode = 2
+text = "Start Game"
+
+[node name="Quit" type="Button" parent="Centered/Controls"]
+layout_mode = 2
+text = "Quit Game"
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="pressed" from="Centered/Controls/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Centered/Controls/Quit" to="." method="_on_quit_pressed"]

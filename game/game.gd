@@ -2,10 +2,11 @@ extends Node
 
 @onready var world: World = $World
 
-func _on_connection_manager_hosting() -> void:
-	world.spawn_player(1)
+func _on_lobby_started_game() -> void:
+	_spawn_players()
+
+func _spawn_players() -> void:
+	world.spawn_player(1) # server's player
 	
-	multiplayer.peer_connected.connect(
-		func(pid) -> void:
-			world.spawn_player(pid)
-	)
+	for peer in multiplayer.get_peers():
+		world.spawn_player(peer)
